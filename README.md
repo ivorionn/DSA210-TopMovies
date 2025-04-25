@@ -1,12 +1,9 @@
 # DSA210-TopMovies
 # Top Movies
 
-# Project Idea
-
 ## Description
-In this project, I will collect and analyze data from IMDB(From Kaggle) and TMDB. I will enrich the research by collecting extra data, such as the time i spend in nature or the time i spend in social media.
-## Purpose
-I was curious about how properties of the movies, such as the ratings, revenue, etc..
+In this project I will merge data from IMDb (Top 5000 list on Kaggle) with the budget and revenues of the movies found in TMDB(with the help of tmbdabi) to discover which measurable factors (budget, length, release year, etc.) influence audience ratings, revenues etc.
+
 # Description Of Datasets
 ## Main Dataset (IMDB)
 This is our main dataset containing information about the top 5000 movies in IMDB.
@@ -27,22 +24,26 @@ This dataset contains information about the revenue's and budget's of the movies
 - **revenue:** Revenue of the movie
 
 ## Tools and Technologies
-- **Python:**
-- **Jupiter Notebook:**
-- **Pandas:**
+- **Python:** Data Collection & Analysis
+- **Jupiter Notebook:** Main program for coding, documentation and visual analysis
+- **Pandas:** Data cleaning and manipulation
+- **Matplotlib:** Basic data visualization
+- **Seaborn:** Advanced and styled data visualizations
+- **SciPy:** Statistical Hypothesis Testing
+- **TMDB API:** To enrich the dataset with movie budgets and revenues
 
-# Analysis Plan
+# Plan
 ## Data Collection
--
-## Visualization
--
--
+- Clean and merge datasets with Pandas
+- Feature Engineering
+- - Adding new columns
+- Visualise distributions and correlations with Matplotlib/Seaborn
+## Data Analysis
+- I will clean the data with the help of the pandas library, analyse and visualize it with described python libraries(Matplotlib,Seaborn).
 ## Hypothesis Testing
 - **Example Hypothesis:**
   - H₀: Budget of the movie has no effect on the rating.
   - Hₐ: Higher budgets make the movie get higher ratings.
-Run regression analysis to identify the strongest predictors of progress.
-
-# Conclusion
-By the end of this project, I hope to gain some ideas about the following questions:
--
+## Expected Outcome
+- Cleaned, merged dataset
+- Jupyter notebook with EDA, tests, models
