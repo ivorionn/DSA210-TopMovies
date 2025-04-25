@@ -1,7 +1,7 @@
 import tmdbsimple as tmdb
 import pandas as pd
 
-# Set your TMDB API key here
+# API KEY for to pull data from TMDB
 tmdb.API_KEY = '260f7d68fecb569fc11ce48c80471254'
 
 # List of original IMDb titles from the mismatches
@@ -42,13 +42,17 @@ titles = [
     "Delivery Man", "Upside Down", "Dorian Gray", "Diary of a Wimpy Kid"
 ]
 
+# A list to store results
 results = []
 for title in titles:
+    # Instantiate a search object for movie titles that we are gonna search in API
     search = tmdb.Search()
+    # response stores a dictionary for results of search
     response = search.movie(query=title)
     matched_title = None
     revenue = None
 
+    # If search results exactly match with case-insensitive checks then refer them as matched
     if search.results:
         # try to find exact match (case-insensitive)
         for r in search.results:
@@ -58,7 +62,9 @@ for title in titles:
         else:
             matched = search.results[0]  # fallback to first result
 
+        # movie makes a request from tmdb api according to matched's id
         movie = tmdb.Movies(matched['id'])
+        # info stores movies info
         info = movie.info()
         matched_title = info.get('title')
         budget = info.get("budget")
@@ -71,6 +77,7 @@ for title in titles:
         'revenue': revenue
     })
 
+# dataframe to store results
 df = pd.DataFrame(results)
 print(df)
 
