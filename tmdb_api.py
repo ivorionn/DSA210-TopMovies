@@ -30,32 +30,38 @@ error_titles = []
 for title in movie_titles:
     # response stores a dictionary for results of search
     response = search.movie(query=title)
-    # tries to print the first result's id 
-    try:
-        print(response["results"][0]["id"])
-    # if an error happens, such as no results may not have been found
-    except:
-        print(f"Some problem happenned with {title}")
-        # Appends the title to error list to checkout later
-        error_titles.append(title)
-        # To prevent any slip in the dataframe, columns assigned to data of 
-        # tmdb are None
+    
+    # Try to find an exact match (case-insensitive) in the search results
+    matched = None
+    if search.results:
+        for r in search.results:
+            if r['title'].lower() == title.lower():
+                matched = r
+                break
+        else:
+            try:
+                matched = search.results[0]  # if no exact match, fallback to first result
+            except:
+                print(f"No results found for {title}")
+                error_titles.append(title)
+                imdb_titles.append(title)
+                tmdb_titles.append(None)
+                budgets.append(None)
+                revenues.append(None)
+                continue
+
+        # Request movie info from tmdb api according to matched's id
+        movie = tmdb.Movies(matched['id'])
+        info = movie.info()
+        imdb_titles.append(title)
+        tmdb_titles.append(info.get('title'))
+        budgets.append(info.get('budget'))
+        revenues.append(info.get('revenue'))
+    else:
         imdb_titles.append(title)
         tmdb_titles.append(None)
         budgets.append(None)
         revenues.append(None)
-        continue
-    
-    # Request for first result's id
-    movie = tmdb.Movies(response["results"][0]["id"])
-    # Store info as a dictionary in the response
-    response = movie.info()
-
-    # Appends each value accordingly to its column name 
-    imdb_titles.append(title)
-    tmdb_titles.append(movie.title)
-    budgets.append(movie.budget)
-    revenues.append(movie.revenue)
 
     # if imdb_data and tmdb's titles are equal no problem, prints True
     if movie.title == title:
